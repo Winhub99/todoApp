@@ -9,7 +9,8 @@ router.post("/login",async (req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
 
-    const User =
+    const user = await User.findOne({username})
+    
 })
 
 module.exports = router
