@@ -1,0 +1,14 @@
+.cardStyle{
+    width: 350px;
+    padding: 15px;
+    padding-bottom: 5px;
+}
+
+.cardStyle .textFieldStyle{
+    margin-bottom: 10px;
+}
+
+body{
+    background-color: #ededed;
+    margin: 0px;
+}
