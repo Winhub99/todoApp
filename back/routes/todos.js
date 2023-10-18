@@ -1,12 +1,17 @@
 const express = require('express')
 const router = express.Router();
-const { Todo } = require('../db/db');
+const { Todo, User  } = require('../db/db');
 const { authenticateJwt } = require('../middleware');
 router.use(express.json())
 router.post("/addTodo", authenticateJwt, async (req, res) => {
-    const todo = new Todo(req.body)
-    await todo.save()
-    res.status(201).json({ message: "The note is created successfully" })
+    if(req.body){
+        const todo = new Todo(req.body)
+        await todo.save()
+        await User.findOneAndUpdate({_id:req.userId}, { $push: { notes: todo._id } },{new:true})
+        res.status(201).json({ message: "The note is created successfully" })    
+    }else{
+        res.status(404).json({message:"Empty string paSSed"})
+    }
 })
 
 router.get("/getAllTodos", authenticateJwt, async (req, res) => {

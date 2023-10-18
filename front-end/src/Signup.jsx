@@ -1,19 +1,55 @@
-import { Typography, Card ,TextField,Button} from '@mui/material'
+import { Typography, Card, TextField, Button } from '@mui/material'
 import './Signin.css'
+import { useState } from 'react'
 export function Signup() {
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const [email, setEmail] = useState();
+    const [contact, setContact] = useState();
 
+    const signupHandler = async()=>{
+            const res = await fetch("http://localhost:3000/auth/signup",{
+                method:"POST",
+                headers:{
+                    'Content-type':'application/json'
+
+                },body:JSON.stringify({username,password,email,contact})
+            });
+
+            const data = await res.json();
+            console.log(data)
+
+
+    }
     return (
 
-        <div style={{ display: 'flex', justifyContent: 'center',marginTop:'125px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '125px' }}>
             <div >
-                <Typography sx={{marginBottom:'10px'}} variant='h4' textAlign={'center'}> Sign Up</Typography>
+                <Typography sx={{ marginBottom: '10px' }} variant='h4' textAlign={'center'}> Sign Up</Typography>
                 <Card className='cardStyle'>
-                    <TextField className='textFieldStyle' fullWidth id="outlined-basic" label="Username" variant="outlined" />
-                    <TextField className='textFieldStyle' fullWidth id="outlined-basic" label="Password" variant="outlined" />
-                    <TextField className='textFieldStyle' fullWidth id="outlined-basic" label="Email" variant="outlined" />
-                    <TextField className='textFieldStyle' fullWidth id="outlined-basic" label="Contact Number" variant="outlined" />
+                    <TextField className='textFieldStyle'
+                        fullWidth id="outlined-basic" label="Username"
+                        variant="outlined"
+                        onChange={(e) => {
+                            setUsername(e.target.value)
+                        }} />
+                    <TextField className='textFieldStyle'
+                        fullWidth id="outlined-basic"
+                        label="Password" variant="outlined"
+                        onChange={(e) => {
+                            setPassword(e.target.value)
+                        }} />
+                    <TextField className='textFieldStyle' fullWidth id="outlined-basic" label="Email" variant="outlined"
+                        onChange={(e) => {
+                            setEmail(e.target.value)
+                        }} />
+                    <TextField className='textFieldStyle' fullWidth id="outlined-basic" label="Contact Number" variant="outlined"
+                        onChange={(e) => {
+                            setContact(e.target.value)
+                        }} />
 
-                    <Button className='textFieldStyle' variant="contained" size='large'>SignUp</Button>
+                    <Button className='textFieldStyle' variant="contained" size='large'
+                    onClick={signupHandler}>SignUp</Button>
                 </Card>
             </div>
         </div>
