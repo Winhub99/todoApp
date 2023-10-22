@@ -25,9 +25,9 @@ export function Signin({isLoggedIn,setIsLoggedIn}) {
 
         if(data.token){
             console.log(data.token)
-            console.log("isLoggedin value before state change: "+ isLoggedIn)
+           // console.log("isLoggedin value before state change: "+ isLoggedIn)
             setIsLoggedIn(true)
-            console.log("isLoggedin value after state change: "+ isLoggedIn)
+           // console.log("isLoggedin value after state change: "+ isLoggedIn)
             localStorage.setItem("token",data.token)
             navigate("/showNotes")
         }

@@ -36,9 +36,16 @@ router.patch("/markAsDone/:noteId", authenticateJwt, async (req, res) => {
 
 router.delete("/deleteNote/:noteId", authenticateJwt, async (req, res) => {
     const { noteId } = req.params
+    const userId = req.userId
     try {
-        await Todo.findByIdAndDelete(noteId)
-        res.status(200).json({ message: "The note has been deleted." })
+          await Todo.findByIdAndDelete(noteId)
+        // console.log(updatedTodos)
+        const user = await User.find({_id:req.userId}).populate('notes').exec()
+        console.log(user)
+        const updatedNotes = user[0].notes
+        console.log(updatedNotes)
+
+        res.status(200).json({ message: "The note has been deleted.",todos:updatedNotes })
     } catch (e) {
         console.log(e)
         res.json({ message: "The request note could not be deleted" })

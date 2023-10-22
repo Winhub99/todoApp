@@ -22,14 +22,12 @@ export function Signup({isLoggedIn, setIsLoggedIn}) {
             const data = await res.json();
             if(data.token){
                 console.log(data)
-                console.log("isLoggedin value before state change: "+ isLoggedIn)
+               // console.log("isLoggedin value before state change: "+ isLoggedIn)
                 localStorage.setItem("token",data.token)
                 setIsLoggedIn(true)
-                console.log("isLoggedin value after state change: "+ isLoggedIn)
+               // console.log("isLoggedin value after state change: "+ isLoggedIn)
                 navigate('/showNotes')
             }
-
-
     }
     return (
 

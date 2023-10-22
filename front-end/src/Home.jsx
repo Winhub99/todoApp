@@ -19,7 +19,6 @@ export function Home() {
             const data = await res.json()
             console.log(data.notes)
             setTodos((data.notes))
-
         }
         getTodos();
 
@@ -42,13 +41,10 @@ export function Home() {
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
                     {todos.map((todo) => {
-                        return <Todo todo={todo} />
+                        return <Todo todo={todo} setTodos={setTodos} />
                     })}
                 </div>
-
-
             </>
-
         )
     }
 }
