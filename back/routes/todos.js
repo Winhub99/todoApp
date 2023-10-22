@@ -15,8 +15,13 @@ router.post("/addTodo", authenticateJwt, async (req, res) => {
 })
 
 router.get("/getAllTodos", authenticateJwt, async (req, res) => {
-    const allNotes = await Todo.find()
+
+    const user = await User.find({_id:req.userId}).populate('notes').exec()
+    console.log(user[0])
+    const allNotes = user[0].notes;
+    console.log(allNotes)
     res.status(200).json({ notes: allNotes })
+    
 })
 
 router.patch("/markAsDone/:noteId", authenticateJwt, async (req, res) => {

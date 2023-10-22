@@ -12,7 +12,7 @@ router.post("/login", async (req, res) => {
     const password = req.body.password;
     console.log("hers's username:" + username + "here's password:" + password)
     const user = await User.findOne({ username, password })
-    console.log(user)
+    //console.log(user)
     if (user) {
         const token = jwt.sign({ id: user._id }, secret, { expiresIn: '1h' })
         res.status(301).json({ message: "Login Successful", token })
@@ -34,6 +34,18 @@ router.post("/signup", async (req, res) => {
         res.status(201).json({ message: "User Signed up successfully!", token })
     }
 
+})
+
+router.get("/me",authenticateJwt, async(req,res)=>{
+    console.log("the user id is:"+ req.userId)
+    const user = await User.findOne({_id:req.userId})
+    console.log(user)
+
+    if(user){
+        res.status(200).json({username:user.username,isLoggedIn:true,message:"User is in session."})
+    }else{
+        res.status(400).json({isLoggedIn:false,message:"User hasn't logged in"})
+    }
 })
 
 module.exports = router

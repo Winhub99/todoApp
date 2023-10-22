@@ -1,11 +1,13 @@
 import { Typography, Card ,TextField,Button} from '@mui/material'
 import './Signin.css'
 import { useState } from 'react'
-import {Link} from 'react-router-dom'
-export function Signin() {
+import {Link ,useNavigate} from 'react-router-dom'
+export function Signin({isLoggedIn,setIsLoggedIn}) {
 
     const [username,setUsername] = useState();
     const [password,setPassword] = useState();
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const loginHandler = async()=>{
         const res = await fetch('http://localhost:3000/auth/login',{
@@ -14,8 +16,22 @@ export function Signin() {
             body:JSON.stringify({username,password})
         });
         const data = await res.json()
-        console.log(data.token)
-        localStorage.setItem("token",data.token)
+        console.log(data)
+            
+        
+        if(res.status === 404){
+            setError(data.message)
+        }
+
+        if(data.token){
+            console.log(data.token)
+            console.log("isLoggedin value before state change: "+ isLoggedIn)
+            setIsLoggedIn(true)
+            console.log("isLoggedin value after state change: "+ isLoggedIn)
+            localStorage.setItem("token",data.token)
+            navigate("/showNotes")
+        }
+        
     }
     return (
 
@@ -37,6 +53,7 @@ export function Signin() {
                         setPassword(e.target.value)
                     }} 
                      />
+                     {error && <div style={{color:"red",marginBottom:"3px"}}>{error}</div>}
                     <Button className='textFieldStyle'
                      variant="contained"
                       size='large'

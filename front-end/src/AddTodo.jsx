@@ -1,8 +1,9 @@
 import { Button, Card, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react"
+import {useNavigate} from 'react-router-dom'
 import "./Signin.css"
 function AddTodo() {
-
+const navigate = useNavigate()
     //    const [todos, setTodos] = useState([]);
     const [title, setTitle] = useState([])
     const [description, setDescription] = useState([])
@@ -20,6 +21,8 @@ function AddTodo() {
 
         const data = await res.json()
         console.log(data)
+        navigate("/showNotes")
+
     }
 
     useEffect(() => {

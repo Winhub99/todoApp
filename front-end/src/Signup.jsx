@@ -1,11 +1,14 @@
 import { Typography, Card, TextField, Button } from '@mui/material'
 import './Signin.css'
 import { useState } from 'react'
-export function Signup() {
+import {useNavigate} from 'react-router-dom'
+export function Signup({isLoggedIn, setIsLoggedIn}) {
+
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [email, setEmail] = useState();
     const [contact, setContact] = useState();
+    const navigate = useNavigate()
 
     const signupHandler = async()=>{
             const res = await fetch("http://localhost:3000/auth/signup",{
@@ -17,7 +20,14 @@ export function Signup() {
             });
 
             const data = await res.json();
-            console.log(data)
+            if(data.token){
+                console.log(data)
+                console.log("isLoggedin value before state change: "+ isLoggedIn)
+                localStorage.setItem("token",data.token)
+                setIsLoggedIn(true)
+                console.log("isLoggedin value after state change: "+ isLoggedIn)
+                navigate('/showNotes')
+            }
 
 
     }
@@ -48,7 +58,7 @@ export function Signup() {
                             setContact(e.target.value)
                         }} />
 
-                    <Button className='textFieldStyle' variant="contained" size='large'
+                    <Button className='textFieldStyle' variant="contained" size='large' color='success'
                     onClick={signupHandler}>SignUp</Button>
                 </Card>
             </div>

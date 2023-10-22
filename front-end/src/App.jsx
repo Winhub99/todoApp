@@ -11,17 +11,17 @@ import AddTodo from './AddTodo'
 import { Home } from './Home'
 
 function App() {
-  const [count, setCount] = useState(0)
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   return (
     <div >
         {/*<Signup/> */}
       <Router>
-      <Appbar/>
+      <Appbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
         <Routes>
-          <Route path='/' element={<Signin></Signin>}></Route>
-          <Route path='/login' element={<Signin></Signin>}></Route>
-          <Route path='/signup' element={<Signup/>}/>
+          <Route path='/' element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}></Route>
+          <Route path='/login' element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}></Signin>}></Route>
+          <Route path='/signup' element={<Signup isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
           <Route path='/addNote' element={<AddTodo/>}/>
           <Route path='/showNotes' element={<Home/>}/>
           
